@@ -42,9 +42,6 @@ export function global(): Global {
   ).toString();
   const last_updated = getStringProperty(json, "last_updated").toString();
 
-  // const totalMarketCapKeys: string[] = json.keys["data"].keys["total_market_cap"];
-  // const totalVolumeKeys = json.keys["data"].keys["total_volume"];
-  // const marketCapPercentageKeys = json.keys["data"].keys["market_cap_percentage"];
   const totalMarketCapKeys: string[] = json.keys;
   const totalVolumeKeys = json.keys;
   const marketCapPercentageKeys = json.keys;
@@ -56,7 +53,7 @@ export function global(): Global {
   for (let i = 0; i < totalMarketCapKeys.length; i++) {
     const marketCap = {
       currency: totalMarketCapKeys[i],
-      market_cap: json["total_market_cap"][totalMarketCapKeys[i]],
+      market_cap: json.getObj("total_market_cap").getValue(totalMarketCapKeys[i]).toString(),
     };
     total_market_cap.push(marketCap);
   }
@@ -64,7 +61,7 @@ export function global(): Global {
   for (let i = 0; i < totalVolumeKeys.length; i++) {
     const volume = {
       currency: totalVolumeKeys[i],
-      market_cap: json["total_volume"][totalVolumeKeys[i]],
+      market_cap: json.getObj("total_volume").getValue(totalVolumeKeys[i]).toString(),
     };
     total_market_cap.push(volume);
   }
@@ -72,7 +69,10 @@ export function global(): Global {
   for (let i = 0; i < marketCapPercentageKeys.length; i++) {
     const marketCapPercentage = {
       currency: marketCapPercentageKeys[i],
-      market_cap: json["market_cap_percentage"][marketCapPercentageKeys[i]],
+      market_cap: json
+        .getObj("market_cap_percentage")
+        .getValue(marketCapPercentageKeys[i])
+        .toString(),
     };
     total_market_cap.push(marketCapPercentage);
   }
