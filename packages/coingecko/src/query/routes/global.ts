@@ -50,31 +50,39 @@ export function global(): Global {
   const marketCapPercentageKeys = json.keys;
 
   const total_market_cap: TotalMarketCap[] = [];
+  const total_market_cap_values = <JSON.Obj>json.getValue("total_market_cap")
+
   const total_volume: TotalVolume[] = [];
+  const total_volume_values = <JSON.Obj>json.getValue("total_volume");
+
   const market_cap_percentage: MarketCapPercentage[] = [];
+  const market_cap_percentage_values = <JSON.Obj>json.getValue("market_cap_percentage");
 
   for (let i = 0; i < totalMarketCapKeys.length; i++) {
-    const marketCap = {
+    const value = <JSON.Str>total_market_cap_values.getValue(totalMarketCapKeys[i]);
+    const marketCap: TotalMarketCap = {
       currency: totalMarketCapKeys[i],
-      market_cap: json["total_market_cap"][totalMarketCapKeys[i]],
+      market_cap: value.valueOf(),
     };
     total_market_cap.push(marketCap);
   }
 
   for (let i = 0; i < totalVolumeKeys.length; i++) {
-    const volume = {
+    const value = <JSON.Str>total_volume_values.getValue(totalVolumeKeys[i]);
+    const volume: TotalVolume = {
       currency: totalVolumeKeys[i],
-      market_cap: json["total_volume"][totalVolumeKeys[i]],
+      total_volume: value.valueOf(),
     };
-    total_market_cap.push(volume);
+    total_volume.push(volume);
   }
 
   for (let i = 0; i < marketCapPercentageKeys.length; i++) {
-    const marketCapPercentage = {
+    const value = <JSON.Str>market_cap_percentage_values.getValue(marketCapPercentageKeys[i]);
+    const marketCapPercentage: MarketCapPercentage = {
       currency: marketCapPercentageKeys[i],
-      market_cap: json["market_cap_percentage"][marketCapPercentageKeys[i]],
+      market_cap_percentage: value.valueOf(),
     };
-    total_market_cap.push(marketCapPercentage);
+    market_cap_percentage.push(marketCapPercentage);
   }
 
   const globalData: GlobalData = {
