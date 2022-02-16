@@ -388,10 +388,6 @@ type CoinHistoryCodeAddDelete {
 Global Reponse https://api.coingecko.com/api/v3/global
 """
 type Global {
-  data: GlobalData!
-}
-
-type GlobalData {
   active_cryptocurrencies: String!
   upcoming_icos: String!
   ongoing_icos: String!
